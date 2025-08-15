@@ -22,7 +22,13 @@ class HFUtils:
             print(f"huggingface logout")
         
 
-    def download(self, repo_id: str, filename: str, local_dir: str, data_units=2):
+    def download(self, repo_id: str, filename: str, local_dir: str, data_units:int=2):
+        path = os.path.join(local_dir, filename)
+
+        if os.path.isfile(path):
+            print(f'✅ {filename} already exist')
+            return path
+
         with self.login():
             print(f"Download Model: {filename} From HF Hub")
             path = hf_hub_download(
@@ -34,6 +40,7 @@ class HFUtils:
             for i in range(data_units):
                 file_size_bytes /= 1024
             print(f"✅ diffusion model {filename} download success, size: {file_size_bytes:.2f}{DATA_UNITS[data_units]}")
+            return path
             
 
 

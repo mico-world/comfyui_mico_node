@@ -32,21 +32,10 @@ class HFUNETLoader:
             model_options["dtype"] = torch.float8_e5m2
 
         unet_dir = os.path.join(folder_paths.models_dir, "diffusion_models")
-        unet_path = os.path.join(unet_dir, filename)
 
-        if os.path.isfile(unet_path):
-            print(f'✅ {filename} already exist')
-        else:
-            hf_utils = HFUtils(api_key)
-            with hf_utils.download(repo_id, filename, unet_dir) as path:
-                file_size_bytes = os.path.getsize(os.path.join(path))
-                file_size_gigabytes = file_size_bytes / (1024 * 1024 * 1024)
-                print(f"✅ diffusion model {filename} download success, size: {file_size_gigabytes:.2f}GB"
-            )
-
+        unet_path = HFUtils(api_key).download(repo_id, filename, unet_dir, 3)
         
-        model = comfy.sd.load_diffusion_model(
-            unet_path, model_options=model_options)
+        model = comfy.sd.load_diffusion_model(unet_path, model_options=model_options)
         return (model,)
 
 
