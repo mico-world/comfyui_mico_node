@@ -13,6 +13,7 @@ class HFHubModelDownloader:
                 "repo_id": ("STRING", {"default": ""}),
                 "filename": ("STRING", {"default": ""}),
                 "model_type": ("STRING", {"default": ""}),
+                "api_key": ("STRING", {"default": ""}),
             }
         }
 
@@ -21,8 +22,8 @@ class HFHubModelDownloader:
 
     CATEGORY = "MICO World"
 
-    def download_model(self, repo_id: str, filename: str, model_type: str):
-        with hf_login():
+    def download_model(self, repo_id: str, filename: str, model_type: str, api_key: str):
+        with hf_login(api_key):
             print(f"Download Model: {filename} From HF Hub")
             hf_hub_download(
                 repo_id=repo_id,
