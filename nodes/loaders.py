@@ -31,8 +31,8 @@ class HFUNETLoader:
         elif weight_dtype == "fp8_e5m2":
             model_options["dtype"] = torch.float8_e5m2
 
-        unet_dir = os.join(folder_paths.models_dir, "diffusion_models")
-        unet_path = os.join(unet_dir, filename)
+        unet_dir = os.path.join(folder_paths.models_dir, "diffusion_models")
+        unet_path = os.path.join(unet_dir, filename)
 
         if not os.path.isfile(unet_path):
             HFUtils(api_key).download(repo_id, filename, os.path.dirname(unet_path))
