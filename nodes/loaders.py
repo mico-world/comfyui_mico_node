@@ -30,13 +30,12 @@ class HFUNETLoader:
             model_options["fp8_optimizations"] = True
         elif weight_dtype == "fp8_e5m2":
             model_options["dtype"] = torch.float8_e5m2
-        try:
-            unet_path = folder_paths.get_full_path_or_raise("diffusion_models", filename)
-        except FileNotFoundError:
+
+        unet_dir = os.join(folder_paths.models_dir, "diffusion_models")
+        unet_path = os.join(unet_dir, filename)
+
+        if not os.path.isfile(unet_path):
             HFUtils(api_key).download(repo_id, filename, os.path.dirname(unet_path))
-                
-            unet_path = folder_paths.get_full_path_or_raise("diffusion_models", filename)
-            
         
         model = comfy.sd.load_diffusion_model(
             unet_path, model_options=model_options)
