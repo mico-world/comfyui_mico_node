@@ -22,6 +22,3 @@ class HFUtils:
         finally:
             logout()
             print(f"huggingface logout")
-
-
-
