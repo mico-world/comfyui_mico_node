@@ -1,4 +1,4 @@
-from .loaders import *
+from .loaders import HFUNETLoader
 
 NODE_CLASS_MAPPINGS = {
     "HFUNETLoader": HFUNETLoader

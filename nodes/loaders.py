@@ -1,10 +1,8 @@
-from contextlib import contextmanager
 import os
-from huggingface_hub import hf_hub_download, login, logout
 import torch
 import folder_paths
 import comfy.sd
-from utils.hf_utils import download
+from ..utils import HFUtils
 
 
 class HFUNETLoader:
@@ -35,7 +33,7 @@ class HFUNETLoader:
         try:
             unet_path = folder_paths.get_full_path_or_raise("diffusion_models", filename)
         except FileNotFoundError:
-            download(repo_id, filename, os.path.dirname(unet_path), api_key)
+            HFUtils(api_key).download(repo_id, filename, os.path.dirname(unet_path))
                 
             unet_path = folder_paths.get_full_path_or_raise("diffusion_models", filename)
             
